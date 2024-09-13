@@ -430,7 +430,6 @@ bool point_in_triangle(
 }
 
 /// @brief check if a diagonal between two polygon Points is valid
-/// @brief Check if a diagonal between two polygon Points is valid
 bool is_valid_diagonal(std::size_t a_idx, std::size_t b_idx, const std::vector<Point>& points)
 {
     const Point& a = points[a_idx];
