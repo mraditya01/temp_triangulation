@@ -122,11 +122,11 @@ std::size_t linked_list(const LinearRing2d& points, bool clockwise, std::size_t&
     // Determine the correct direction and insert points
     if (clockwise == (sum > 0)) {
         for (std::size_t i = 0; i < len; i++) {
-            last_index = insert_point(vertices + i, points[i], points_vec, true);
+            last_index = insert_point(vertices + i, points[i], points_vec, clockwise == (sum > 0));
         }
     } else {
         for (std::size_t i = 0; i < len; i++) {
-            last_index = insert_point(vertices + i, points[len - 1 - i], points_vec, false);
+            last_index = insert_point(vertices + i, points[len - 1 - i], points_vec, clockwise == (sum > 0));
         }
     }
     if (clockwise == (sum > 0)) {
@@ -201,7 +201,7 @@ std::size_t eliminate_holes(const std::vector<LinearRing2d>& inners, std::size_t
     const std::size_t len = inners.size();
     std::vector<std::size_t> queue;
     for (std::size_t i = 0; i < len; i++) {
-        auto list = linked_list(inners[i], true, vertices, points_vec);
+        auto list = linked_list(inners[i], false, vertices, points_vec);
         if (list != std::numeric_limits<std::size_t>::max()) {
             queue.push_back(get_leftmost(list, points_vec));
         }
@@ -430,6 +430,7 @@ bool point_in_triangle(
 }
 
 /// @brief check if a diagonal between two polygon Points is valid
+/// @brief Check if a diagonal between two polygon Points is valid
 bool is_valid_diagonal(std::size_t a_idx, std::size_t b_idx, const std::vector<Point>& points)
 {
     const Point& a = points[a_idx];
